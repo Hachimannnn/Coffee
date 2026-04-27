@@ -21,7 +21,7 @@ const drinks = [
     price: 34000,
     popularity: 10,
     contains: ["oatmilk"],
-    src: "/Menu/EspressoBacXiu.jpg",
+    src: "Menu/EspressoBacXiu.jpg",
   },
   {
     name: "Mê Xỉu",
@@ -31,7 +31,7 @@ const drinks = [
     price: 39000,
     popularity: 8,
     contains: [],
-    src: "/Menu/MeXiu.jpg"
+    src: "Menu/MeXiu.jpg"
   },
   {
     name: "Espresso Sữa Đá",
@@ -41,7 +41,7 @@ const drinks = [
     price: 35000,
     popularity: 8,
     contains: ["oatmilk"],
-    src: "/Menu/EspressoSuaDa.jpg"
+    src: "Menu/EspressoSuaDa.jpg"
   },
   {
     name: "Mê Đen Đá",
@@ -51,7 +51,7 @@ const drinks = [
     price: 35000,
     popularity: 9,
     contains: [],
-    src: "/Menu/MeDenDa.jpg"
+    src: "Menu/MeDenDa.jpg"
   },
   {
     name: "Socola KATINAT",
@@ -61,7 +61,7 @@ const drinks = [
     price: 35000,
     popularity: 9,
     contains: [],
-    src: "/Menu/SocolaKATINAT.jpg"
+    src: "Menu/SocolaKATINAT.jpg"
   },
 
   // 🍵 MATCHA / TEA
@@ -73,7 +73,7 @@ const drinks = [
     price: 59000,
     popularity: 9,
     contains: ["oatmilk"],
-    src: "/Menu/MatchaLatte.jpg"
+    src: "Menu/MatchaLatte.jpg"
   },
   {
     name: "Matcha Tàu Hũ",
@@ -83,7 +83,7 @@ const drinks = [
     price: 69000,
     popularity: 8,
     contains: ["oatmilk"],
-    src: "/Menu/MatchaTauHu.jpg"
+    src: "Menu/MatchaTauHu.jpg"
   },
   {
     name: "Trà Đào Hồng Đài",
@@ -93,7 +93,7 @@ const drinks = [
     price: 64000,
     popularity: 9,
     contains: [],
-    src: "/Menu/TraDaoHongDai.jpg"
+    src: "Menu/TraDaoHongDai.jpg"
   },
   {
     name: "Trà Vải",
@@ -103,7 +103,7 @@ const drinks = [
     price: 54000,
     popularity: 7,
     contains: [],
-    src: "/Menu/TraVai.jpg"
+    src: "Menu/TraVai.jpg"
   },
 
   // 🧋 MILK TEA
@@ -115,7 +115,7 @@ const drinks = [
     price: 42000,
     popularity: 9,
     contains: ["oatmilk"],
-    src: "/Menu/TraOolongNuongSua.jpg"
+    src: "Menu/TraOolongNuongSua.jpg"
   },
   {
     name: "Oolong Ba Lá",
@@ -125,7 +125,7 @@ const drinks = [
     price: 28000,
     popularity: 7,
     contains: ["oatmilk"],
-    src: "/Menu/OolongBaLa.jpg"
+    src: "Menu/OolongBaLa.jpg"
   },
   {
     name: "Huyền Châu Đường Mật",
@@ -135,7 +135,7 @@ const drinks = [
     price: 65000,
     popularity: 9,
     contains: ["oatmilk"],
-    src: "/Menu/HuyenChauDuongMat.jpg"
+    src: "Menu/HuyenChauDuongMat.jpg"
   },
   {
     name: "Thanh Hương Camellia",
@@ -145,7 +145,7 @@ const drinks = [
     price: 65000,
     popularity: 8,
     contains: ["oatmilk"],
-    src: "/Menu/ThanhHuongCamellia.jpg"
+    src: "Menu/ThanhHuongCamellia.jpg"
   },
   {
     name: "Dừa xiêm dẻ cười",
@@ -155,7 +155,7 @@ const drinks = [
     price: 55000,
     popularity: 9,
     contains: ["peanut"],
-    src: "/Menu/DuaXiemDeCuoi.jpg"
+    src: "Menu/DuaXiemDeCuoi.jpg"
   },
 
   // 🥛 LATTE STYLE
@@ -167,7 +167,7 @@ const drinks = [
     price: 56000,
     popularity: 8,
     contains: ["oatmilk"],
-    src: "/Menu/LatteHatPhi.jpg"
+    src: "Menu/LatteHatPhi.jpg"
   },
   {
     name: "Latte Nguyên bản",
@@ -177,7 +177,7 @@ const drinks = [
     price: 52000,
     popularity: 7,
     contains: ["oatmilk"],
-    src: "/Menu/LatteNguyenBan.jpg"
+    src: "Menu/LatteNguyenBan.jpg"
   }
 ];
 
