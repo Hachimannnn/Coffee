@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coffee Match</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- CART UI -->
+<div id="cart-modal" class="cart-modal hidden">
+  <div class="cart-content">
+    <h2>Your Cart</h2>
+    <div id="cart-items"></div>
+    <h3>Total: <span id="cart-total">0</span> VND</h3>
+    <button onclick="sendOrder()">Send to Bar</button>
+    <button onclick="closeCart()">Close</button>
+  </div>
+</div>
+
+<!-- Table box -->
+<header>
+  <div class="table-box">
+    Table: <strong>#A12</strong>
+  </div>
+  <div class="cart-box">
+    <button class="cart-button" onclick="openCart()" aria-label="View cart">
+      <span class="cart-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 4H5L4 6H6L9.6 13.59 8.25 16.04C8.09 16.32 8 16.65 8 17C8 18.1 8.9 19 10 19H19V17H10.9L12 15H18.45C19.2 15 19.86 14.59 20.2 14.03L23.78 7.54C23.86 7.4 23.9 7.24 23.9 7.06 23.9 6.51 23.45 6.06 22.9 6.06H8.4L7 4ZM6 22C4.9 22 4 21.1 4 20S4.9 18 6 18 8 18.9 8 20 7.1 22 6 22ZM18 22C16.9 22 16 21.1 16 20S16.9 18 18 18 20 18.9 20 20 19.1 22 18 22Z" fill="currentColor"/>
+        </svg>
+        <span class="cart-badge" id="cart-count">0</span>
+      </span>
+    </button>
+  </div>
+  <h1>☕ Coffee Match</h1>
+  <p>Find your perfect drink</p>
+</header>
+
+<main>
+
+  <div class="progress">
+    <div id="progress-bar"></div>
+  </div>
+
+  <section class="card" id="quiz">
+
+    <!-- Step 1 -->
+    <div class="step active" id="step1">
+      <h2>Drink type</h2>
+      <button onclick="selectOption('base','coffee')">Coffee</button>
+      <button onclick="selectOption('base','tea')">Tea</button>
+      <button onclick="selectOption('base','milk_tea')">Milk Tea</button>
+      <button onclick="selectOption('base','blended')">Blended</button>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step" id="step2">
+      <h2>Flavor</h2>
+      <div id="step2-options"></div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step" id="step3">
+      <h2>Caffeine</h2>
+      <button onclick="selectOption('caffeine','high')">High</button>
+      <button onclick="selectOption('caffeine','medium')">Medium</button>
+      <button onclick="selectOption('caffeine','low')">Low</button>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step" id="step4">
+      <h2>Temperature</h2>
+      <button onclick="selectOption('temp','hot')">Hot</button>
+      <button onclick="selectOption('temp','iced')">Iced</button>
+      <button onclick="selectOption('temp','blended')">Blended</button>
+    </div>
+
+    <!-- Step 5 (ALLERGY NOW HERE) -->
+    <div class="step" id="step5">
+      <h2>Any allergies?</h2>
+      <button onclick="selectOption('allergy','none')">None</button>
+      <button onclick="selectOption('allergy','peanut')">Peanut</button>
+      <button onclick="selectOption('allergy','oatmilk')">Oat Milk</button>
+    </div>
+
+    <!-- Step 6 (SIZE LAST) -->
+    <div class="step" id="step6">
+      <h2>Size</h2>
+      <button onclick="selectOption('size','S')">Small</button>
+      <button onclick="selectOption('size','M')">Medium</button>
+      <button onclick="selectOption('size','L')">Large</button>
+    </div>
+
+  </section>
+
+  <section class="card hidden" id="result-section">
+    <h2>Your Drinks</h2>
+    <div id="results"></div>
+  </section>
+
+</main>
+
+<!-- Toast -->
+<div id="toast" class="toast">
+  <h2>✅ Order Confirmed</h2>
+  <p>Your order will be delivered shortly ☕</p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
