@@ -22,7 +22,7 @@ const drinks = [
     price: 34000,
     popularity: 10,
     contains: ["oatmilk"],
-    src: "Menu/EspressoBacXiu.jpg",
+    src: "/Menu/EspressoBacXiu.jpg",
   },
   {
     name: "Mê Xỉu",
@@ -32,7 +32,7 @@ const drinks = [
     price: 39000,
     popularity: 8,
     contains: [],
-    src: "Menu/MeXiu.jpg"
+    src: "/Menu/MeXiu.jpg"
   },
   {
     name: "Espresso Sữa Đá",
@@ -42,7 +42,7 @@ const drinks = [
     price: 35000,
     popularity: 8,
     contains: ["oatmilk"],
-    src: "Menu/EspressoSuaDa.jpg"
+    src: "/Menu/EspressoSuaDa.jpg"
   },
   {
     name: "Mê Đen Đá",
@@ -52,7 +52,7 @@ const drinks = [
     price: 35000,
     popularity: 9,
     contains: [],
-    src: "Menu/MeDenDa.jpg"
+    src: "/Menu/MeDenDa.jpg"
   },
   {
     name: "Socola KATINAT",
@@ -62,7 +62,7 @@ const drinks = [
     price: 35000,
     popularity: 9,
     contains: [],
-    src: "Menu/SocolaKATINAT.jpg"
+    src: "/Menu/SocolaKATINAT.jpg"
   },
 
   // 🍵 MATCHA / TEA
@@ -74,7 +74,7 @@ const drinks = [
     price: 59000,
     popularity: 9,
     contains: ["oatmilk"],
-    src: "Menu/MatchaLatte.jpg"
+    src: "/Menu/MatchaLatte.jpg"
   },
   {
     name: "Matcha Tàu Hũ",
@@ -84,7 +84,7 @@ const drinks = [
     price: 69000,
     popularity: 8,
     contains: ["oatmilk"],
-    src: "Menu/MatchaTauHu.jpg"
+    src: "/Menu/MatchaTauHu.jpg"
   },
   {
     name: "Trà Đào Hồng Đài",
@@ -94,7 +94,7 @@ const drinks = [
     price: 64000,
     popularity: 9,
     contains: [],
-    src: "Menu/TraDaoHongDai.jpg"
+    src: "/Menu/TraDaoHongDai.jpg"
   },
   {
     name: "Trà Vải",
@@ -104,7 +104,7 @@ const drinks = [
     price: 54000,
     popularity: 7,
     contains: [],
-    src: "Menu/TraVai.jpg"
+    src: "/Menu/TraVai.jpg"
   },
 
   // 🧋 MILK TEA
@@ -116,7 +116,7 @@ const drinks = [
     price: 42000,
     popularity: 9,
     contains: ["oatmilk"],
-    src: "Menu/TraOolongNuongSua.jpg"
+    src: "/Menu/TraOolongNuongSua.jpg"
   },
   {
     name: "Oolong Ba Lá",
@@ -126,7 +126,7 @@ const drinks = [
     price: 28000,
     popularity: 7,
     contains: ["oatmilk"],
-    src: "Menu/OolongBaLa.jpg"
+    src: "/Menu/OolongBaLa.jpg"
   },
   {
     name: "Huyền Châu Đường Mật",
@@ -136,7 +136,7 @@ const drinks = [
     price: 65000,
     popularity: 9,
     contains: ["oatmilk"],
-    src: "Menu/HuyenChauDuongMat.jpg"
+    src: "/Menu/HuyenChauDuongMat.jpg"
   },
   {
     name: "Thanh Hương Camellia",
@@ -146,7 +146,7 @@ const drinks = [
     price: 65000,
     popularity: 8,
     contains: ["oatmilk"],
-    src: "Menu/ThanhHuongCamellia.jpg"
+    src: "/Menu/ThanhHuongCamellia.jpg"
   },
   {
     name: "Dừa xiêm dẻ cười",
@@ -156,7 +156,7 @@ const drinks = [
     price: 55000,
     popularity: 9,
     contains: ["peanut"],
-    src: "Menu/DuaXiemDeCuoi.jpg"
+    src: "/Menu/DuaXiemDeCuoi.jpg"
   },
 
   // 🥛 LATTE STYLE
@@ -168,7 +168,7 @@ const drinks = [
     price: 56000,
     popularity: 8,
     contains: ["oatmilk"],
-    src: "Menu/LatteHatPhi.jpg"
+    src: "/Menu/LatteHatPhi.jpg"
   },
   {
     name: "Latte Nguyên bản",
@@ -178,7 +178,7 @@ const drinks = [
     price: 52000,
     popularity: 7,
     contains: ["oatmilk"],
-    src: "Menu/LatteNguyenBan.jpg"
+    src: "/Menu/LatteNguyenBan.jpg"
   }
 ];
 
@@ -515,5 +515,146 @@ function closeCart() {
 
 function sendOrder() {
   document.getElementById("cart-modal").classList.add("hidden");
-  showToast();
+  const toast = document.getElementById("toast");
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+    openWaitOptions();
+  }, 1800);
 }
+
+function openWaitOptions() {
+  closeAllViews();
+  document.getElementById("wait-options-modal").classList.remove("hidden");
+}
+
+function closeWaitOptions() {
+  document.getElementById("wait-options-modal").classList.add("hidden");
+}
+
+function closeAllViews() {
+  document.getElementById('mode-card').classList.add('hidden');
+  document.getElementById('budget-card').classList.add('hidden');
+  document.getElementById('quiz').classList.add('hidden');
+  document.getElementById('result-section').classList.add('hidden');
+  document.getElementById('game-card').classList.add('hidden');
+  document.getElementById('chat-card').classList.add('hidden');
+  document.getElementById('cart-modal').classList.add('hidden');
+  document.getElementById('progress-bar').style.width = '0%';
+}
+
+function startGame() {
+  closeWaitOptions();
+  closeAllViews();
+  document.getElementById('game-card').classList.remove('hidden');
+  resetGame();
+}
+
+function startChat() {
+  closeWaitOptions();
+  closeAllViews();
+  document.getElementById('chat-card').classList.remove('hidden');
+  const chatBox = document.getElementById('chat-box');
+  chatBox.innerHTML = '';
+  renderChatMessage('robot', 'Hello! I am Barista Bot. Ask me anything while you wait.');
+}
+
+let gameActive = false;
+let gameScore = 0;
+let gameTime = 10;
+let gameTimerId = null;
+
+function resetGame() {
+  gameActive = false;
+  gameScore = 0;
+  gameTime = 10;
+  clearInterval(gameTimerId);
+
+  const status = document.getElementById('game-status');
+  const actionButton = document.getElementById('game-action-button');
+  const playArea = document.getElementById('game-play');
+
+  status.innerText = 'Ready to play?';
+  actionButton.innerText = 'Start game';
+  playArea.classList.add('hidden');
+}
+
+function toggleGame() {
+  if (gameActive) {
+    return;
+  }
+
+  gameActive = true;
+  gameScore = 0;
+  gameTime = 10;
+  const status = document.getElementById('game-status');
+  const actionButton = document.getElementById('game-action-button');
+  const playArea = document.getElementById('game-play');
+
+  status.innerText = `Time left: ${gameTime}s`;
+  actionButton.innerText = 'Game running';
+  playArea.classList.remove('hidden');
+
+  gameTimerId = setInterval(() => {
+    gameTime -= 1;
+    status.innerText = `Time left: ${gameTime}s`;
+
+    if (gameTime <= 0) {
+      clearInterval(gameTimerId);
+      gameActive = false;
+      playArea.classList.add('hidden');
+      status.innerText = `Done! Your score is ${gameScore}.`;
+      actionButton.innerText = 'Play again';
+    }
+  }, 1000);
+}
+
+function registerGameTap() {
+  if (!gameActive) return;
+  gameScore += 1;
+  document.getElementById('game-status').innerText = `Time left: ${gameTime}s · Score: ${gameScore}`;
+}
+
+function sendChatMessage() {
+  const input = document.getElementById('chat-input');
+  const message = input.value.trim();
+  if (!message) return;
+
+  renderChatMessage('user', message);
+  input.value = '';
+
+  setTimeout(() => {
+    const response = generateRobotReply(message);
+    renderChatMessage('robot', response);
+  }, 700);
+}
+
+function renderChatMessage(sender, message) {
+  const chatBox = document.getElementById('chat-box');
+  const bubble = document.createElement('div');
+  bubble.className = `chat-message ${sender}`;
+  bubble.innerText = message;
+  chatBox.appendChild(bubble);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function generateRobotReply(message) {
+  const lower = message.toLowerCase();
+  if (lower.includes('menu')) {
+    return 'You can order from the main menu or ask me for recommendations.';
+  }
+  if (lower.includes('coffee') || lower.includes('drink')) {
+    return 'My favorite is Espresso Bạc Xỉu when I need a tasty pick-me-up.';
+  }
+  if (lower.includes('wait') || lower.includes('time')) {
+    return 'Orders usually arrive in 5–10 minutes. Relax, and I will keep you company.';
+  }
+  if (lower.includes('play') || lower.includes('game')) {
+    return 'Try the Coffee Catch game above to pass time with fun taps!';
+  }
+  return 'That sounds great! I am here if you want more suggestions or a reason to smile.';
+}
+
+// initialize budget formatting once script is loaded
+setupBudgetFormatting();
