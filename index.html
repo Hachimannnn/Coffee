@@ -4,9 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Coffee Match</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <img id="bg-pattern" src="https://static.vecteezy.com/system/resources/thumbnails/077/473/937/small/bakery-pattern-featuring-bread-croissant-cake-muffin-and-pretzel-in-golden-hand-drawn-sketch-style-on-dark-background-perfect-for-food-packaging-and-cafe-design-illustration-style-free-vector.jpg" alt="" aria-hidden="true">
 
 <!-- CART UI -->
 <div id="cart-modal" class="cart-modal hidden">
@@ -44,10 +47,43 @@
     <div id="progress-bar"></div>
   </div>
 
-  <section class="card" id="quiz">
+  <!-- Order mode selection (new) -->
+  <section class="card" id="mode-card">
+    <h2>How would you like to order?</h2>
+    <div class="mode-grid" style="margin-top: 50px">
+      <button class="mode-tile" onclick="chooseMode('match')">
+        <div class="mode-icon">☕</div>
+        <div class="mode-label">Match drink</div>
+      </button>
+
+      <button class="mode-tile" onclick="chooseMode('budget')">
+        <div class="mode-icon">💸</div>
+        <div class="mode-label">Order from budget</div>
+      </button>
+
+      <button class="mode-tile" onclick="chooseMode('menu')">
+        <div class="mode-icon">📜</div>
+        <div class="mode-label">Choose from menu</div>
+      </button>
+    </div>
+  </section>
+
+  <!-- Budget input (shown when choosing budget mode) -->
+  <section class="card hidden" id="budget-card">
+    <h2>Enter your maximum budget</h2>
+    <div style="margin-top:10px;">
+      <input type="text" id="budget-max" placeholder="Maximum (e.g., 50 000)" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ddd;">
+    </div>
+    <div style="margin-top:8px; display:flex; gap:8px;">
+      <button style="flex:1" onclick="applyBudget()">Find drinks within budget</button>
+      <button style="flex:1; background:#777" onclick="backToMode()">Back</button>
+    </div>
+  </section>
+
+  <section class="card hidden" id="quiz">
 
     <!-- Step 1 -->
-    <div class="step active" id="step1">
+    <div class="step" id="step1">
       <h2>Drink type</h2>
       <button onclick="selectOption('base','coffee')">Coffee</button>
       <button onclick="selectOption('base','tea')">Tea</button>
@@ -93,10 +129,13 @@
       <button onclick="selectOption('size','L')">Large</button>
     </div>
 
+    <!-- persistent back button (visible across all steps) -->
+    <button class="back-button" onclick="backToMode()">← Back</button>
+
   </section>
 
   <section class="card hidden" id="result-section">
-    <h2>Your Drinks</h2>
+    <h2>Menu</h2>
     <div id="results"></div>
   </section>
 
@@ -107,6 +146,41 @@
   <h2>✅ Order Confirmed</h2>
   <p>Your order will be delivered shortly ☕</p>
 </div>
+
+<div id="wait-options-modal" class="wait-options-modal hidden">
+  <div class="wait-content">
+    <h2>While you wait...</h2>
+    <p>Choose one option below to pass the time.</p>
+    <div class="wait-actions">
+      <button onclick="startGame()">Play a quick game</button>
+      <button onclick="startChat()">Chat with our robot</button>
+    </div>
+    <button class="secondary" onclick="backToMode()">No thanks, return</button>
+  </div>
+</div>
+
+<section class="card hidden" id="game-card">
+  <h2>Coffee Catch</h2>
+  <p>Tap the button as many times as possible in 10 seconds.</p>
+  <div class="game-status" id="game-status">Ready to play?</div>
+  <div class="game-actions">
+    <button id="game-action-button" onclick="toggleGame()">Start game</button>
+    <button class="secondary" onclick="backToMode()">Back to menu</button>
+  </div>
+  <div class="game-play hidden" id="game-play">
+    <button class="game-button" id="game-click-button" onclick="registerGameTap()">Tap me!</button>
+  </div>
+</section>
+
+<section class="card hidden" id="chat-card">
+  <h2>Chat Robot</h2>
+  <div class="chat-box" id="chat-box"></div>
+  <div class="chat-input-row">
+    <input id="chat-input" type="text" placeholder="Ask the robot something...">
+    <button onclick="sendChatMessage()">Send</button>
+  </div>
+  <button class="secondary" onclick="backToMode()">Back to menu</button>
+</section>
 
 <script src="script.js?v=2"></script>
 </body>
