@@ -207,8 +207,9 @@ function showToast() {
   toast.classList.add("show");
 
   setTimeout(() => {
-    location.reload();
-  }, 2500);
+    toast.classList.remove("show");
+    openWaitOptions();
+  }, 1800);
 }
 
 function hideHero() {
@@ -585,8 +586,6 @@ function sendOrder() {
   document.getElementById("cart-modal").classList.add("hidden");
   showToast();
 }
-// Note: removed accidental top-level toast/show block that ran on script load.
-// Toast should only be shown via `showToast()` when an order is sent.
 
 function openWaitOptions() {
   closeAllViews();
