@@ -583,10 +583,8 @@ function closeCart() {
 
 function sendOrder() {
   document.getElementById("cart-modal").classList.add("hidden");
-<<<<<<< HEAD
   showToast();
 }
-=======
   const toast = document.getElementById("toast");
   toast.classList.add("show");
 
@@ -594,7 +592,6 @@ function sendOrder() {
     toast.classList.remove("show");
     openWaitOptions();
   }, 1800);
-}
 
 function openWaitOptions() {
   closeAllViews();
@@ -748,4 +745,3 @@ function generateRobotReply(message) {
 
 // initialize budget formatting once script is loaded
 setupBudgetFormatting();
->>>>>>> 76f2924 (Add Matcha Tau Hu menu item and update website styling)
