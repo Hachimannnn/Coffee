@@ -11,7 +11,6 @@ let userChoices = {
 
 let cart = [];
 let currentMode = null; // 'match' | 'budget' | 'menu'
-
 const drinks = [
   // ☕ COFFEE
   {
@@ -22,7 +21,7 @@ const drinks = [
     price: 34000,
     popularity: 10,
     contains: ["oatmilk"],
-    src: "/Menu/EspressoBacXiu.jpg",
+    src: "Menu/EspressoBacXiu.jpg",
   },
   {
     name: "Mê Xỉu",
@@ -182,6 +181,26 @@ const drinks = [
   }
 ];
 
+const categories = [
+  'All',
+  'Coffee',
+  'Tea',
+  'Milk Tea',
+  'Blended',
+  'Matcha',
+  'Chocolate'
+];
+
+const categoryFilters = {
+  All: () => true,
+  Coffee: drink => drink.base === 'coffee',
+  Tea: drink => drink.base === 'tea',
+  'Milk Tea': drink => drink.base === 'milk_tea',
+  Blended: drink => drink.base === 'blended',
+  Matcha: drink => drink.tags.includes('matcha'),
+  Chocolate: drink => drink.tags.includes('chocolate')
+};
+
 // Toast
 function showToast() {
   const toast = document.getElementById("toast");
@@ -190,6 +209,18 @@ function showToast() {
   setTimeout(() => {
     location.reload();
   }, 2500);
+}
+
+function hideHero() {
+  const hero = document.querySelector('header.hero');
+  if (hero) hero.classList.add('hero-hidden');
+  document.body.classList.add('mode-active');
+}
+
+function showHero() {
+  const hero = document.querySelector('header.hero');
+  if (hero) hero.classList.remove('hero-hidden');
+  document.body.classList.remove('mode-active');
 }
 
 function selectOption(type, value) {
@@ -256,6 +287,8 @@ function calculateMatch(drink) {
 function showResults() {
   document.getElementById("quiz").classList.add("hidden");
   document.getElementById("result-section").classList.remove("hidden");
+  document.getElementById('category-tabs').classList.add('hidden');
+
   // ensure menu grid layout is removed for match results
   const resultsContainer = document.getElementById('results');
   resultsContainer.classList.remove('menu-grid');
@@ -270,6 +303,25 @@ function showResults() {
     .sort((a, b) => b.score - a.score);
 
   renderResults(results.slice(0, 4));
+}
+
+function renderCategoryTabs() {
+  const tabs = document.getElementById('category-tabs');
+  tabs.innerHTML = categories
+    .map(cat => `<button class="${cat === activeCategory ? 'active' : ''}" onclick="chooseCategory('${cat}')">${cat}</button>`)
+    .join('');
+}
+
+function filterDrinksByCategory(list) {
+  return list.filter(categoryFilters[activeCategory]);
+}
+
+function chooseCategory(category) {
+  activeCategory = category;
+  renderCategoryTabs();
+  const filtered = filterDrinksByCategory(drinks)
+    .sort((a, b) => b.popularity - a.popularity);
+  renderResults(filtered);
 }
 
 function renderResults(list) {
@@ -341,10 +393,12 @@ function renderResults(list) {
     div.onclick = () => addToCart(r);
 
     div.innerHTML = `
-      <img src="${r.src}">
+      <div class="image-frame">
+        <img src="${r.src}" alt="${r.name}">
+      </div>
       <div>
         <h3>${r.name} ${currentMode === 'match' ? '(' + userChoices.size + ')' : ''}</h3>
-        <p>💰 ${r.price.toLocaleString()} VND</p>
+        <p class="price">💰 ${r.price.toLocaleString()} VND</p>
         <p>${r.description}</p>
       </div>
     `;
@@ -355,8 +409,8 @@ function renderResults(list) {
 
 function chooseMode(mode) {
   currentMode = mode;
-  document.getElementById('mode-card').classList.add('hidden');
   document.getElementById('budget-card').classList.add('hidden');
+  hideHero();
 
   if (mode === 'match') {
     // reset quiz
@@ -376,6 +430,7 @@ function chooseMode(mode) {
     document.getElementById('quiz').classList.add('hidden');
     document.getElementById('budget-card').classList.remove('hidden');
     document.getElementById('result-section').classList.add('hidden');
+    document.getElementById('category-tabs').classList.add('hidden');
   }
 
   if (mode === 'menu') {
@@ -384,12 +439,27 @@ function chooseMode(mode) {
 }
 
 function backToMode() {
+  showHero();
+
+  // If we opened chat/game from the results view, restore the results instead of hiding them
+  if (lastViewWasResults) {
+    lastViewWasResults = false;
+    closeAllViews();
+    // Re-show and re-render the menu properly
+    showMenu();
+    return;
+  }
+
   currentMode = null;
   document.getElementById('budget-card').classList.add('hidden');
   document.getElementById('quiz').classList.add('hidden');
   document.getElementById('result-section').classList.add('hidden');
-  document.getElementById('mode-card').classList.remove('hidden');
+  document.getElementById('game-card').classList.add('hidden');
+  document.getElementById('chat-card').classList.add('hidden');
+  document.getElementById('wait-options-modal').classList.add('hidden');
   document.getElementById('progress-bar').style.width = '0%';
+  const progress = document.querySelector('.progress');
+  if (progress) progress.style.display = 'none';
 }
 
 /* Budget helpers: format with spaces every 3 digits, and parse */
@@ -433,6 +503,7 @@ function showBudgetResults(max) {
   document.getElementById('budget-card').classList.add('hidden');
   document.getElementById('result-section').classList.remove('hidden');
   document.getElementById('quiz').classList.add('hidden');
+  document.getElementById('category-tabs').classList.add('hidden');
 
   // ensure menu grid layout is removed for budget results
   const resultsContainer = document.getElementById('results');
@@ -448,9 +519,10 @@ function showBudgetResults(max) {
 
 function showMenu() {
   currentMode = 'menu';
-  document.getElementById('mode-card').classList.add('hidden');
+  activeCategory = 'All';
   document.getElementById('quiz').classList.add('hidden');
   document.getElementById('result-section').classList.remove('hidden');
+  document.getElementById('category-tabs').classList.remove('hidden');
 
   // use grid layout for the menu view
   const resultsContainer = document.getElementById('results');
@@ -460,8 +532,8 @@ function showMenu() {
   const progress = document.querySelector('.progress');
   if (progress) progress.style.display = 'none';
 
-  // show all drinks sorted by popularity
-  let results = drinks.slice().sort((a, b) => b.popularity - a.popularity);
+  renderCategoryTabs();
+  let results = filterDrinksByCategory(drinks).sort((a, b) => b.popularity - a.popularity);
   renderResults(results);
 }
 
@@ -488,7 +560,6 @@ function updateCart() {
 
 function openCart() {
   document.getElementById("cart-modal").classList.remove("hidden");
-  document.getElementById("mode-card").classList.add("hidden");
 
   const list = document.getElementById("cart-items");
   list.innerHTML = "";
@@ -508,13 +579,14 @@ function openCart() {
 
 function closeCart() {
   document.getElementById("cart-modal").classList.add("hidden");
-  if (!currentMode) {
-    document.getElementById("mode-card").classList.remove("hidden");
-  }
 }
 
 function sendOrder() {
   document.getElementById("cart-modal").classList.add("hidden");
+<<<<<<< HEAD
+  showToast();
+}
+=======
   const toast = document.getElementById("toast");
   toast.classList.add("show");
 
@@ -534,26 +606,34 @@ function closeWaitOptions() {
 }
 
 function closeAllViews() {
-  document.getElementById('mode-card').classList.add('hidden');
   document.getElementById('budget-card').classList.add('hidden');
   document.getElementById('quiz').classList.add('hidden');
   document.getElementById('result-section').classList.add('hidden');
   document.getElementById('game-card').classList.add('hidden');
   document.getElementById('chat-card').classList.add('hidden');
   document.getElementById('cart-modal').classList.add('hidden');
+  document.getElementById('wait-options-modal').classList.add('hidden');
   document.getElementById('progress-bar').style.width = '0%';
 }
 
+let lastViewWasResults = false;
+
 function startGame() {
+  // remember whether results/menu was visible so Back can restore it
+  lastViewWasResults = !document.getElementById('result-section').classList.contains('hidden');
   closeWaitOptions();
   closeAllViews();
+  hideHero();
   document.getElementById('game-card').classList.remove('hidden');
   resetGame();
 }
 
 function startChat() {
+  // remember whether results/menu was visible so Back can restore it
+  lastViewWasResults = !document.getElementById('result-section').classList.contains('hidden');
   closeWaitOptions();
   closeAllViews();
+  hideHero();
   document.getElementById('chat-card').classList.remove('hidden');
   const chatBox = document.getElementById('chat-box');
   chatBox.innerHTML = '';
@@ -630,6 +710,16 @@ function sendChatMessage() {
   }, 700);
 }
 
+function setChatPrompt(promptText, autoSend = false) {
+  const input = document.getElementById('chat-input');
+  input.value = promptText;
+  input.focus();
+  if (autoSend) {
+    // small timeout so focus and value settle before sending
+    setTimeout(() => sendChatMessage(), 50);
+  }
+}
+
 function renderChatMessage(sender, message) {
   const chatBox = document.getElementById('chat-box');
   const bubble = document.createElement('div');
@@ -658,3 +748,4 @@ function generateRobotReply(message) {
 
 // initialize budget formatting once script is loaded
 setupBudgetFormatting();
+>>>>>>> 76f2924 (Add Matcha Tau Hu menu item and update website styling)
