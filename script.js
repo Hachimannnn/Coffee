@@ -585,13 +585,8 @@ function sendOrder() {
   document.getElementById("cart-modal").classList.add("hidden");
   showToast();
 }
-  const toast = document.getElementById("toast");
-  toast.classList.add("show");
-
-  setTimeout(() => {
-    toast.classList.remove("show");
-    openWaitOptions();
-  }, 1800);
+// Note: removed accidental top-level toast/show block that ran on script load.
+// Toast should only be shown via `showToast()` when an order is sent.
 
 function openWaitOptions() {
   closeAllViews();
