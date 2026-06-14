@@ -373,7 +373,7 @@ function renderResults(list) {
           <img src="${r.src}">
           <div>
             <h4>${r.name}</h4>
-            <p>💰 ${r.price.toLocaleString()} VND</p>
+            <p><span class="emoji">💰</span> ${r.price.toLocaleString()} VND</p>
           </div>
         `;
         grid.appendChild(card);
@@ -399,7 +399,7 @@ function renderResults(list) {
       </div>
       <div>
         <h3>${r.name} ${currentMode === 'match' ? '(' + userChoices.size + ')' : ''}</h3>
-        <p class="price">💰 ${r.price.toLocaleString()} VND</p>
+        <p class="price"><span class="emoji">💰</span> ${r.price.toLocaleString()} VND</p>
         <p>${r.description}</p>
       </div>
     `;
